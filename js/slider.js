@@ -1,6 +1,9 @@
 const imageHeight = 400;
 const imageWidth = 600;
 
+var currentImg = 0;
+
+
 
 var imageWrapper = document.querySelector('.carousel-image-wrapper');
 addUIElements();
@@ -22,17 +25,16 @@ var right = 0;
 
 previousArrow.addEventListener('click', function(event) {
 
+    renderImage(currentImg, 'previous');
+    console.log('current-img: ' + currentImg);
 
-    left += imageWidth;
-
-    imageWrapper.style.marginLeft = left + "px";
 });
 
 
 nextArrow.addEventListener('click', function(event) {
 
-    left -= imageWidth
-    imageWrapper.style.marginLeft = left + "px";
+    renderImage(currentImg, 'next');
+    console.log('current-img: ' + currentImg);
 });
 
 function addUIElements() {
@@ -63,7 +65,7 @@ var images = document.querySelectorAll('.carousel-image-wrapper > img')
 
 images.forEach(function(value, index) {
     var indicator = document.createElement('div');
-    indicator.setAttribute('id', index);
+    indicator.setAttribute('id', 'img' + index);
     indicator.style.display = 'inline-block';
     indicator.style.backgroundImage = 'url(./images/indicator-off.png)';
     indicator.style.height = '40px';
@@ -71,8 +73,109 @@ images.forEach(function(value, index) {
     indicatorWrapper.appendChild(indicator);
 
     indicator.addEventListener('click', function(event) {
-        var imageId = event.target.id
-        left = -imageId * 600
-        imageWrapper.style.marginLeft = left + "px";
+        var imageId = event.target.id.match(/\d+/g);
+        renderImage(imageId[0], 'indicatior-click');
+        console.log('current-img: ' + currentImg);
     })
 })
+
+
+
+
+
+function renderImage(currentImage, action) {
+    if (action === 'next') {
+
+        // if (currentImage >= noOfImages - 1) {
+        //     currentImage = -1;
+        // }
+
+
+        if (currentImage >= noOfImages - 1) {
+            var timesRun = 0;
+            var interval = setInterval(function() {
+                left += 240;
+                imageWrapper.style.marginLeft = left + "px";
+                timesRun += 1;
+                if (timesRun === 10) {
+                    clearInterval(interval);
+                }
+            }, 10)
+            currentImage = -1
+        } else {
+            var timesRun = 0;
+            var interval = setInterval(function() {
+                left -= 60;
+                imageWrapper.style.marginLeft = left + "px";
+                timesRun += 1;
+                if (timesRun === 10) {
+                    clearInterval(interval);
+                }
+            }, 10);
+        }
+
+        nextImg = currentImage + 1;
+
+        // left = -nextImg * imageWidth;
+
+        currentImg = nextImg;
+
+    }
+
+    if (action === 'previous') {
+        // if (currentImg <= 0) {
+        //     currentImage = noOfImages;
+        // }
+
+        if (currentImage <= 0) {
+            var timesRun = 0;
+            var interval = setInterval(function() {
+                left -= 240;
+                imageWrapper.style.marginLeft = left + "px";
+                timesRun += 1;
+                if (timesRun === 10) {
+                    clearInterval(interval);
+                }
+            }, 10)
+            currentImage = noOfImages;
+        } else {
+            var timesRun = 0;
+            var interval = setInterval(function() {
+                left += 60;
+                imageWrapper.style.marginLeft = left + "px";
+                timesRun += 1;
+                if (timesRun === 10) {
+                    clearInterval(interval);
+                }
+            }, 10);
+        }
+
+        previousImg = currentImage - 1;
+
+        // left = -previousImg * imageWidth;
+
+        currentImg = previousImg;
+    }
+
+    if (action === 'indicatior-click') {
+        left = -currentImage * 600;
+        currentImg = currentImage;
+        console.log('m' + currentImg)
+    }
+
+    imageWrapper.style.marginLeft = left + "px";
+    showIndicator(currentImg);
+
+}
+
+function showIndicator(currentImg) {
+    console.log('function called' + currentImg);
+    for (var i = 0; i < noOfImages; i++) {
+        indicator = document.querySelector('#img' + i);
+        if (i === currentImg) {
+            indicator.style.backgroundImage = 'url(./images/indicator-on.png)';
+        } else {
+            indicator.style.backgroundImage = 'url(./images/indicator-off.png)';
+        }
+    }
+}
