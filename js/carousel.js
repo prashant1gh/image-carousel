@@ -2,6 +2,7 @@ const imageHeight = 400;
 const imageWidth = 600;
 
 var currentImg = 0;
+var left = 0;
 
 
 
@@ -17,11 +18,11 @@ var noOfImages = document.querySelectorAll('.carousel-image-wrapper > img').leng
 
 carousel.style.width = imageWidth + 'px';
 carousel.style.margin = '10%';
+
 var totalSliderWidth = noOfImages * imageWidth
 imageWrapper.style.width = totalSliderWidth + 'px';
 
-var left = 0;
-var right = 0;
+
 
 previousArrow.addEventListener('click', function(event) {
 
@@ -37,23 +38,7 @@ nextArrow.addEventListener('click', function(event) {
     console.log('current-img: ' + currentImg);
 });
 
-function addUIElements() {
-    var leftArrow = document.createElement('div');
-    var rightArrow = document.createElement('div');
 
-
-    leftArrow.style.backgroundImage = 'url(./images/left-arrow.png)';
-    rightArrow.style.backgroundImage = 'url(./images/right-arrow.png)';
-
-    leftArrow.classList.add('previous-arrow');
-    rightArrow.classList.add('next-arrow');
-
-    imageWrapper.appendChild(leftArrow);
-    imageWrapper.appendChild(rightArrow);
-
-
-
-}
 
 var indicatorWrapper = document.createElement('div');
 indicatorWrapper.classList.add('carousel-indicator-wrapper');
@@ -79,17 +64,23 @@ images.forEach(function(value, index) {
     })
 })
 
+function addUIElements() {
+    var leftArrow = document.createElement('div');
+    var rightArrow = document.createElement('div');
 
 
+    leftArrow.style.backgroundImage = 'url(./images/left-arrow.png)';
+    rightArrow.style.backgroundImage = 'url(./images/right-arrow.png)';
 
+    leftArrow.classList.add('previous-arrow');
+    rightArrow.classList.add('next-arrow');
+
+    imageWrapper.appendChild(leftArrow);
+    imageWrapper.appendChild(rightArrow);
+}
 
 function renderImage(currentImage, action) {
     if (action === 'next') {
-
-        // if (currentImage >= noOfImages - 1) {
-        //     currentImage = -1;
-        // }
-
 
         if (currentImage >= noOfImages - 1) {
             var timesRun = 0;
@@ -115,17 +106,11 @@ function renderImage(currentImage, action) {
         }
 
         nextImg = currentImage + 1;
-
-        // left = -nextImg * imageWidth;
-
         currentImg = nextImg;
 
     }
 
     if (action === 'previous') {
-        // if (currentImg <= 0) {
-        //     currentImage = noOfImages;
-        // }
 
         if (currentImage <= 0) {
             var timesRun = 0;
@@ -151,9 +136,6 @@ function renderImage(currentImage, action) {
         }
 
         previousImg = currentImage - 1;
-
-        // left = -previousImg * imageWidth;
-
         currentImg = previousImg;
     }
 
