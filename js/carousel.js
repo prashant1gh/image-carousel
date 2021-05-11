@@ -7,6 +7,8 @@ var left = 0;
 
 
 var imageWrapper = document.querySelector('.carousel-image-wrapper');
+imageWrapper.classList.add('clearfix');
+
 addUIElements();
 
 
@@ -46,6 +48,7 @@ imageWrapper.appendChild(indicatorWrapper);
 
 
 
+
 var images = document.querySelectorAll('.carousel-image-wrapper > img')
 
 images.forEach(function(value, index) {
@@ -59,8 +62,11 @@ images.forEach(function(value, index) {
 
     indicator.addEventListener('click', function(event) {
         var imageId = event.target.id.match(/\d+/g);
-        renderImage(imageId[0], 'indicatior-click');
+        renderImage(parseInt(imageId[0]), 'indicatior-click');
+        console.log(left)
         console.log('current-img: ' + currentImg);
+
+
     })
 })
 
@@ -140,9 +146,23 @@ function renderImage(currentImage, action) {
     }
 
     if (action === 'indicatior-click') {
+        pLeft = 0;
         left = -currentImage * 600;
-        currentImg = currentImage;
+        lc = 60
+
+
         console.log('m' + currentImg)
+        var timesRun = 0;
+        var interval = setInterval(function() {
+            left -= lc;
+            imageWrapper.style.marginLeft = left + "px";
+            timesRun += 1;
+            if (timesRun === 10) {
+                clearInterval(interval);
+            }
+        }, 10);
+
+        currentImg = currentImage;
     }
 
     imageWrapper.style.marginLeft = left + "px";

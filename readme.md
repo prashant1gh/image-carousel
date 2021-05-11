@@ -26,7 +26,7 @@ You don't need any special markup. All you need is to wrap your divsinside the c
 ```html
 <!-- Set up your HTML -->
 <div class="carousel">
-        <div class="carousel-image-wrapper clearfix">
+        <div class="carousel-image-wrapper">
             <img src="#" alt="" />
             <img src="#" alt="" />
             <img src="#" alt="" />
