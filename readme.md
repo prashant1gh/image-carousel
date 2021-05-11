@@ -1,6 +1,6 @@
 # Image Carousel made with vannila JS
 
-![Screenshot](./images/screenshot1.png)
+![alt text](https://github.com/prashant1gh/image-carousel/blob/gh-pages/images/Screenshot1.png?raw=true)
 
 ## How to Use
 
