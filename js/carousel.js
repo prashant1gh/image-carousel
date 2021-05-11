@@ -91,7 +91,7 @@ function renderImage(currentImage, action) {
         if (currentImage >= noOfImages - 1) {
             var timesRun = 0;
             var interval = setInterval(function() {
-                left += 240;
+                left += imageWidth * (noOfImages - 1) / 10;
                 imageWrapper.style.marginLeft = left + "px";
                 timesRun += 1;
                 if (timesRun === 10) {
@@ -121,7 +121,7 @@ function renderImage(currentImage, action) {
         if (currentImage <= 0) {
             var timesRun = 0;
             var interval = setInterval(function() {
-                left -= 240;
+                left -= imageWidth * (noOfImages - 1) / 10;
                 imageWrapper.style.marginLeft = left + "px";
                 timesRun += 1;
                 if (timesRun === 10) {
